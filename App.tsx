@@ -1,20 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-
+import { NavigationContainer } from "@react-navigation/native";
+import {
+  useFonts,
+  Dosis_300Light,
+  Dosis_400Regular,
+  Dosis_500Medium,
+  Dosis_600SemiBold,
+  Dosis_700Bold,
+} from "@expo-google-fonts/dosis";
+import { NativeBaseProvider } from "native-base";
+import { theme } from "@/theme";
+import MainNavigation from "@/navigation/Main";
+import { store } from "@/redux";
+import { Provider } from "react-redux";
+import FAB from "@/components/FAB";
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Dosis_300Light,
+    Dosis_400Regular,
+    Dosis_500Medium,
+    Dosis_600SemiBold,
+    Dosis_700Bold,
+  });
+  if (!fontsLoaded) return <></>;
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <NativeBaseProvider theme={theme}>
+        <NavigationContainer>
+          <MainNavigation />
+          {/* <FAB /> */}
+        </NavigationContainer>
+      </NativeBaseProvider>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
